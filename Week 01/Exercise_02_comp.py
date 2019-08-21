@@ -58,6 +58,7 @@ parameters = np.array([[mass], [age], [distance], [brightness], [surface_temp], 
 
 mass_walk = np.reshape(mass, (400,5000))
 chains = mass_walk
+
 age_walk = np.reshape(age, (400,5000))
 distance_walk = np.reshape(distance, (400,5000))
 brightness_walk = np.reshape(brightness, (400,5000))
@@ -77,13 +78,14 @@ plt.show()
 # YOUR TASK: find the star's predicted mass by finding median of the 
 #            first column of values (index 0) from the flattened data.
 
-star_mass = np.median(chains[0])
-print('The star\'s mass from the first chain is: ' ,star_mass)
-median_chains = []
-for chain in chains:
-    median_chains.append(np.median(chain))
-star_mass_all = np.median(median_chains)
-print('The star\'s mass from all chains is: ', star_mass_all)
+star_mass = np.median(mass)
+print('The star\'s mass from the median is: ' ,star_mass)
+
+#median_chains = []
+#for chain in chains:
+#    median_chains.append(np.median(chain))
+#star_mass_all = np.median(median_chains)
+#print('The star\'s mass from all chains is: ', star_mass_all)
 
 
 # CHALLENGE: find the best mass by flattening *only* the final step from

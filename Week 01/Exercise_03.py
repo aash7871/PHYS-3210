@@ -46,3 +46,46 @@ Created on Tue Aug 20 11:02:00 2019
 @author: gafeiden
 """
 
+import numpy as np
+import matplotlib.pyplot as plt
+import math
+
+#in a for loop:
+
+x_val = [0.05,0.5,1,5,50,500]
+summation = 0
+relative_errors = []
+
+for x in x_val:
+    print('x = ',x)
+    print("sin(x) = ", np.sin(x))
+    for n in range(1000):
+    
+        denomenator = math.factorial((2*n)+1)
+    
+        iteration = (((-1)**(n))*(x**((2*n)+1)))/denomenator
+    
+        summation = summation + iteration
+    
+        if np.abs(iteration) <= (1/(10**8)):
+            print('sin(x) approx ', summation)
+            print('sin(x) approximation accurate at iteration ', n)
+            break
+    
+    abs_err = np.sin(x) - summation
+    rel_err = abs_err/x
+    relative_errors.append(rel_err)
+    
+
+plt.plot(x_val, relative_errors,  '-', lw=1)
+plt.xlabel('x')
+plt.ylabel('relative error')
+plt.show()
+        
+
+    #print("sin(x) approx ", summation)
+
+
+
+
+

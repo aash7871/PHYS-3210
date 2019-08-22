@@ -68,11 +68,11 @@ radius_walk = np.reshape(radius, (400,5000))
 
 
 # YOUR TASK: print the shape of the array to the screen
-print(chains.shape)
+print("The shape of the chains is:", chains.shape)
 
 # plot each individual chain (walker that takes N steps)
 for chain in chains:
-    plt.plot(chain[:], '-', lw=1)
+    plt.plot(chain, '-', lw=1)
 plt.show()
 
 # YOUR TASK: find the star's predicted mass by finding median of the 

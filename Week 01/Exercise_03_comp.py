@@ -52,34 +52,47 @@ import math
 
 #in a for loop:
 
-x_val = [0.05,0.5,1,5,50,500]
+x_val = np.arange(0,50,0.1)
+#x_val = [0.01,0.5,5,50,500]
 summation = 0
 relative_errors = []
+
+approx_y = []
+actual_y = []
 
 for x in x_val:
     print('x = ',x)
     print("sin(x) = ", np.sin(x))
-    for n in range(1000):
+    actual_y.append(np.sin(x))
+    for n in range(100):
     
         denomenator = math.factorial((2*n)+1)
     
         iteration = (((-1)**(n))*(x**((2*n)+1)))/denomenator
     
         summation = summation + iteration
+        
     
         if np.abs(iteration) <= (1/(10**8)):
             print('sin(x) approx ', summation)
-            print('sin(x) approximation accurate at iteration ', n)
+            print('sin(x) approximation complete ', n)
             break
     
     abs_err = np.sin(x) - summation
     rel_err = abs_err/x
     relative_errors.append(rel_err)
-    
+    approx_y.append(summation)
 
-plt.plot(x_val, relative_errors,  '-', lw=1)
+plt.plot(x_val, relative_errors,  '.', lw=1)
 plt.xlabel('x')
 plt.ylabel('relative error')
+plt.show()
+
+#plt.plot(x_val, actual_y, '.', lw = 1, label = 'f(x) = sin(x)')
+plt.plot(x_val, approx_y, '.', lw = 1, label = 'sin(x) approximation')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.legend()
 plt.show()
         
 

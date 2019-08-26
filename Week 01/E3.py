@@ -83,6 +83,13 @@ import matplotlib.pyplot as plt
 
 #in a for loop:
 
+def factorial(n):
+    factor = 1
+    for n in range(1,((2*n)+1)+1):
+        factorial = factor*(n)
+        factor = factorial
+    return factorial
+
 x_val = np.arange(-10,10,0.1)
 
 
@@ -94,12 +101,18 @@ relative_errors = []
 approx_y = []
 actual_y = []
 
-for x in x_val:
-    print('x = ',x)
-    print("sin(x) = ", np.sin(x))
-    actual_y.append(np.sin(x))
+for x_v in x_val:
+    print('x = ',x_v)
+    print("sin(x) = ", np.sin(x_v))
+    actual_y.append(np.sin(x_v))
     initial_fact = 1.0
-    N = 10
+    N = 1000
+    m = x_v//(2*np.pi)
+    if np.sign(x_v) == -1:
+        x = x_v + (2*m*np.pi)
+    if np.sign(x_v) == 1:
+        x = x_v - (2*m*np.pi)
+    
     #if x == 0.0:
         #continue
     
@@ -109,24 +122,18 @@ for x in x_val:
  
     for n in fact_array:
         
-        value = ((2*n) + 1)
-        fact = (value)*initial_fact
-        initial_fact = fact
-
-        denomenator = fact
+        denomenator = factorial(n)
+            
+        iteration = (((-1.0)**(n))*(x**((2*n)+1)))/denomenator
         
-        iteration = (((-1)**(n))*(x**(value)))/denomenator
-    
         summation = summation + iteration
         
-        
-        
-        if np.abs(iteration/summation) <= (1e-8):
+        if np.abs(iteration/summation) <= (1e-16):
             print("iteration/summation = ", np.abs(iteration/summation))
             print('sin(x) approximation complete ', n)
             break
         
-    print('sin(x) approx ', summation)
+    #print('sin(x) approx ', summation)
              
     
     abs_err = np.sin(x) - summation
@@ -139,21 +146,21 @@ plt.xlabel('x')
 plt.ylabel('relative error')
 plt.show()
 
-plt.plot(x_val, actual_y, '.', lw = 1, label = 'f(x) = sin(x)')
-plt.plot(x_val, approx_y, '.', lw = 1, label = 'sin(x) approximation')
+plt.plot(x_val, actual_y, '.', lw = 1, label = 'f(x) = sin(x)', alpha = 0.5, color = '#642EFE')
+plt.plot(x_val, approx_y, '.', lw = 1, label = 'sin(x) approximation', alpha = 0.5)
 plt.xlabel('x')
 plt.ylabel('y')
 plt.legend()
 plt.show()
 
-plt.plot(x_val, actual_y, '.', lw = 1, label = 'f(x) = sin(x)')
-plt.plot(x_val, approx_y, '.', lw = 1, label = 'sin(x) approximation')
-plt.xlabel('x')
-plt.ylabel('y')
-plt.xlim(-10,10)
-plt.ylim(-3,3)
-plt.legend()
-plt.show()       
+#plt.plot(x_val, actual_y, '.', lw = 1, label = 'f(x) = sin(x)')
+#plt.plot(x_val, approx_y, '.', lw = 1, label = 'sin(x) approximation', alpha = 0.3)
+#plt.xlabel('x')
+#plt.ylabel('y')
+#plt.xlim(-10,10)
+#plt.ylim(-3,3)
+#plt.legend()
+#plt.show()       
 
 
 

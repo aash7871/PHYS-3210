@@ -113,9 +113,6 @@ for x_v in x_val:
     if np.sign(x_v) == 1:
         x = x_v - (2*m*np.pi)
     
-    #if x == 0.0:
-        #continue
-    
     summation = 0.0
     
     fact_array = np.arange(0,N+1,1)
@@ -151,6 +148,11 @@ plt.plot(x_val, approx_y, '.', lw = 1, label = 'sin(x) approximation', alpha = 0
 plt.xlabel('x')
 plt.ylabel('y')
 plt.legend()
+plt.show()
+
+plt.plot(actual_y, approx_y, '.', lw = 1)
+plt.ylabel('Approximation')
+plt.xlabel('Actual')
 plt.show()
 
 #plt.plot(x_val, actual_y, '.', lw = 1, label = 'f(x) = sin(x)')

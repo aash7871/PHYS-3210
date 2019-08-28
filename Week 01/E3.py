@@ -96,8 +96,8 @@ x_val = np.arange(-10,10,0.1)
 
 #x_val = [0.2]
 summation = 0
-relative_errors = []
 
+relative_errors = []
 approx_y = []
 actual_y = []
 
@@ -154,15 +154,6 @@ plt.plot(actual_y, approx_y, '.', lw = 1)
 plt.ylabel('Approximation')
 plt.xlabel('Actual')
 plt.show()
-
-#plt.plot(x_val, actual_y, '.', lw = 1, label = 'f(x) = sin(x)')
-#plt.plot(x_val, approx_y, '.', lw = 1, label = 'sin(x) approximation', alpha = 0.3)
-#plt.xlabel('x')
-#plt.ylabel('y')
-#plt.xlim(-10,10)
-#plt.ylim(-3,3)
-#plt.legend()
-#plt.show()       
 
 
 

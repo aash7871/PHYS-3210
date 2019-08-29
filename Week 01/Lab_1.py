@@ -26,24 +26,25 @@ plt.legend()
 plt.show()
 
 
-A = 160000
-B = 10
-alpha = 0.45
-beta = 0.01
+#A = 160000
+#B = 10
+#alpha = 0.45
+#beta = 0.01
 
-vl = A * np.exp(-alpha*time) + B * np.exp(-beta*time)
+#vl = A * np.exp(-alpha*time) + B * np.exp(-beta*time)
 
-plt.plot(HIV_data[:,0], HIV_data[:,1], '.', label = 'experimental data')
-plt.plot(time, vl, '.', label = 'model')
-plt.suptitle("A = {0}, B = {1}, alpha = {2}, beta = {3}".format(A,B,alpha,beta))
-plt.legend()
-plt.show()
+#plt.plot(HIV_data[:,0], HIV_data[:,1], '.', label = 'experimental data')
+#plt.plot(time, vl, '.', label = 'model')
+#plt.suptitle("A = {0}, B = {1}, alpha = {2}, beta = {3}".format(A,B,alpha,beta))
+#plt.legend()
+#plt.show()
 
 #pt. c from first computer lab - Physical Modelling: The latency period of HIV is ~ ten years. 1/alpha, is equal to 
 #2.22, or ~1/5 the latency period of HIV. 
 
 #1. What were the key assumptions made in the derivation and in your approach to solving the problem that 
-#made the problem tractable? 
+#made the problem tractable (easy to control)? 
+
 #A: We assume that an anti-viral medication shuts down further infection, causing only the infected T cells to matter
 # in the derivation. We also assume that the rate that T cells are cleared at is given by some probability(k)*time(t).
 #This gives us an equation for the rate at which T cells are cleared from the system, a greater population of T cells
@@ -55,10 +56,20 @@ plt.show()
 
 #2. What would be the consequences of relaxing the assumptions listed in question 1? How might your approach 
 #to solving the problem change?
-#If the rate at which Infected T cells were cleared was not proportional to the amount present at a given time, the 
+
+#A: If the rate at which Infected T cells were cleared was not proportional to the amount present at a given time, the 
 #differential equation would be different, yielding a different equation for the amount of infected T cells at a 
 #given time. This in turn would affect the viron clearance rate and the number of virons present at a given time. 
 
+
 #3. How did the two limiting cases help simplify the problem?
-#The limiting case where t = 0 determines that the viral load at t = 0 is equal to the initial viral load. The 
-#limiting case where t goes to infinity determines that the viral load should go to zero at infinity. 
+
+#A: The limiting cases demonstrate the behavior of the system when the rate at which infected T cells are cleared is
+#very large (K_I>>K_V), and the case where the rate at which virons are cleared is very large (K_V>>K_I). In the 
+#first case, this means that new virons are not being created, and the number of virons present at a given time is 
+#an exponential decay function. In the second case, it turns out that the rate at which virons are cleared and 
+#produced are both very large. This gives an equation for the number of virons present which is proportional 
+#to the rate at which T cells are cleared. Both of these equations provide some solution to the number of virons 
+#present at a given time. We can guess a trial solution where the total number of virons present at a time is the
+#summation of these two formulas. Checking this with the initial differential equation, we find that this is the 
+#solution to the equation. 

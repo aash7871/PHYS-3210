@@ -120,5 +120,5 @@ def projectile(initial_velocity, angle, y_initial, x_initial, accelaration_gravi
        
     return (np.column_stack((time_id, x_id, y_id, vx_id, vy_id))), (np.column_stack((time_drag,dx,dy,vx,vy)))
 
-ideal, drag = projectile(30,45,0,0,9.81,np.arange(0,100,0.001),2,0.02,0.002, True)
+ideal, drag = projectile(30,45,0,0,9.81,np.arange(0,100,0.001),2,0.002,0.001, True)
 np.savetxt('/Users/amandaash/Desktop/PHYS_3210/Week 02/drag_trajectory.txt', drag, header = 'time, distance x, distance y, velocity x velocity y')

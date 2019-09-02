@@ -109,7 +109,7 @@ def projectile(initial_velocity, angle, y_initial, x_initial, accelaration_gravi
         plt.plot(x_id,y_id, '.', label = 'Ideal', color = '#81BEF7')
         plt.plot(dx, dy, '.', label = 'Drag', color = '#5F04B4')
         #plt.suptitle(r'initial_velocity = {0}, $\theta$ = {1}, $x_0$ = {2}, \n$y_0$ = {3}, mass = {4}, $\Delta$t = {5}'.format(initial_velocity, angle, y0,x0,mass, delta_t))
-        plt.title('trajectory given: initial velocity={0}[m/s], $\Theta ={1}^\circ$, $x_0$={2}[m], \n $y_0$={3}[m], $a_g$={4}$[m*s^-2]$, mass={5}[kg], $\Delta t={6}[s]$, $C_d$={7}'.format(initial_velocity, angle, x_initial,y_initial,g, mass, delta_t,drag_coefficient))
+        plt.title('trajectory given: initial velocity={0}[m/s], $\Theta ={1}^\circ$, $x_0$={2}[m], \n $y_0$={3}[m], $a_g$={4}$[m*s^-2]$, mass={5}[kg], \n $\Delta t={6}[s]$, $C_d$={7}$[kg*m^-1]$'.format(initial_velocity, angle, x_initial,y_initial,g, mass, delta_t,drag_coefficient))
         #plt.hlines(0, np.min(x_ideal)-3, np.max(x_ideal)+3)
         plt.ylabel('y(t) [m]')
         plt.xlabel('x(t) [m]')

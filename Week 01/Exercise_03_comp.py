@@ -76,7 +76,7 @@ import matplotlib.pyplot as plt
 
 #in a for loop:
 
-x_val = np.arange(0,5,0.1)
+x_val = np.arange(-20,20,0.1)
 #x_val = [0.2]
 summation = 0
 relative_errors = []
@@ -90,7 +90,10 @@ for x in x_val:
     actual_y.append(np.sin(x))
     fact = 1.0
     N = 30
-    #if x == 0.0:
+    m = x//(2*np.pi)
+    #x = x - (2*np.pi*m)
+    #print(x)
+    #if x == 0.0
         #continue
     summation = 0.0
     for n in range(N+1):
@@ -114,11 +117,11 @@ for x in x_val:
     
             summation = summation + iteration
                 
-            if np.abs(iteration/summation) <= (1e-8):
+            if np.abs(iteration/summation) <= (1e-16):
                 #print("iteration/summation = ", np.abs(iteration/summation))
                 
                 print('sin(x) approx ', summation)
-                print('sin(x) approximation complete ', n)
+                print('sin(x) approximation converges at ', n)
                 break
         
             

@@ -36,11 +36,14 @@ for n in range(1000):
 plt.plot(n_val, harm_err, '.', lw = 1)
 plt.show()
 
+"""
+When N = 6, the analytical solution to the harmonic series is 2.45. The downward harmonic series is equal to 
+this value, making the downward solution more precise. The upward harmonic series has extra digits. 
 
-#when N = 6, the analytical solution to the harmonic series is 2.45. The downward harmonic series is equal to 
-#this value, making the downward solution more precise. The upward harmonic series has extra digits. 
+The reason this is the case is because when you start with a large number, in this case 1, if you are adding 
+a smaller number, the smaller number is converted to scientific notation with the same exponent as the larger number.
+This can truncate numbers which are greater than 16 decimal points away. For example, small numbers which would 
+normally round to some number would be saved as 0. However, if you start with a small number, as in the downward 
+series, the exponents are smaller initially, so more f the decimal points are saved. 
 
-#the reason this is the case is because when you start with a large number, in this case 1, if you are adding 
-#a smaller number, the smaller number is converted to scientific notation with the same exponent as the larger number.
-#This can truncate numbers which are greater than 16 decimal points away. However, if you start with a small number, 
-#as in the downward series, the exponents are smaller initially, so more of the decimal points are saved. 
+"""

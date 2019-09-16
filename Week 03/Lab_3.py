@@ -92,7 +92,7 @@ for iteration in range(N):
 print('f = {0}'.format(len(f)))
 chain_length = len(coordinates) - 1
 print('protien length = {0}'.format(chain_length))
-print("E = {0}".format(len(f)*epsilon))
+print("E = {0}".format(len(f)*-epsilon))
 coordinates = np.array(coordinates)
 polar_coordinates = np.array(polar_coordinates)
 non_polar_coordinates = np.array(non_polar_coordinates)

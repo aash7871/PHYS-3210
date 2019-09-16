@@ -5,6 +5,9 @@ Created on Sun Sep 15 11:57:14 2019
 
 @author: amandaash
 """
+import random as rand
+import numpy as np
+import matplotlib.pyplot as plt
 def rand_protien(N, P, epsilon):
     import random as rand
     import numpy as np
@@ -76,7 +79,7 @@ def rand_protien(N, P, epsilon):
     plt.legend()
     #plt.show()
     
-    return chain_length, len(f)*epsilon
+    return chain_length, len(f)*-epsilon
 
 l = []
 E = []

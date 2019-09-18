@@ -54,8 +54,8 @@ def rand_protien_3D(N, P, epsilon, upper_lim):
     
         if coordinate_new in coordinates:
             continue
-        if abs(x_n) >= upper_lim or abs(y_n)>= upper_lim or abs(z_n)>= upper_lim:
-            continue
+        #if abs(x_n) >= upper_lim or abs(y_n)>= upper_lim or abs(z_n)>= upper_lim:
+         #   continue
     
         else:
             coordinates.append(coordinate_new)
@@ -109,7 +109,7 @@ l = []
 E = []
 protien_number = []
 for protien in range(5):
-    length, Energy = rand_protien_3D(100, 0.70, 1, 10)
+    length, Energy = rand_protien_3D(1000, 0.70, 1, 10)
     plt.title(protien)
     plt.savefig('/Users/amandaash/Desktop/PHYS_3210/Week 04/protien_plots_3D/{0}.pdf'.format(protien))
     plt.close()

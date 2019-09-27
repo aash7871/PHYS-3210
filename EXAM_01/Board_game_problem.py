@@ -114,8 +114,8 @@ plt.legend()
 plt.savefig('/Users/amandaash/Desktop/PHYS_3210/Exam_01/4b_ex_game.pdf')
 plt.show()
 
-print('Average number of spins to win game version 1 = {0} +/- {1}, median number of spins to win V1 = {2}'.format(np.mean(wins1), str(np.std(wins1)/np.sqrt(plays))[:5], np.median(wins1)))
-print('Average number of spins to win game version 2 = {0} +/- {1}, median number of spins to win V2 = {2}'.format(np.mean(wins2), str(np.std(wins2)/np.sqrt(plays))[:5], np.median(wins2)))
+print('Average number of spins to win game version 1 = {0} +/- {1}, median number of spins to win V1 = {2}'.format(np.mean(wins1), str(np.std(wins1)), np.median(wins1)))
+print('Average number of spins to win game version 2 = {0} +/- {1}, median number of spins to win V2 = {2}'.format(np.mean(wins2), str(np.std(wins2)), np.median(wins2)))
 
 
 

@@ -8,7 +8,7 @@ Created on Mon Sep 30 10:28:57 2019
 import numpy as np
 import numpy.linalg as lin
 
-matrix_A = np.array([[4,2,1],[3,6,-4],[2,1,8]])
+matrix_A = np.array([[4,-2,1],[3,6,-4],[2,1,8]])
 inverse_A = lin.inv(matrix_A)
 print(np.array([[52,17,2],[-32,30,19],[-9,8,30]])/263)
 print('---------')

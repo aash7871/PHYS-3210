@@ -15,6 +15,8 @@ E_i = np.arange(0,225,25)
 g_Ei = np.array([10.6,16.0,45.0,83.5,52.8,19.9,10.8,8.25,4.7])
 sigma_i = np.array([9.34,17.9,41.5,85.5,51.5,21.5,10.8,6.29,4.14])
 
+print(np.mean(sigma_i))
+
 lagrange = interp.lagrange(E_i, g_Ei)
 lagrange_g_Ei = lagrange(np.arange(0,205,5))
 
@@ -27,6 +29,7 @@ cubic_g_Ei = cubic_spline(np.arange(0,205,5))
 plt.title('Total lagrange polynomial')
 plt.plot(E_i, g_Ei, '.')
 plt.plot(np.arange(0,205,5), lagrange_g_Ei, '-')
+plt.savefig('lagrange.pdf')
 plt.show()
 
 print('peak = {0}'.format(np.max(lagrange_g_Ei)))
@@ -47,11 +50,13 @@ print("FWHM = {0}".format(root2 - root1))
 plt.title('linear interpolation')
 plt.plot(E_i, g_Ei, '.')
 plt.plot(np.arange(0,205,5), lin_g_Ei, '-')
+plt.savefig('linear.pdf')
 plt.show()
 
 plt.title('cubic spline interpolation')
 plt.plot(E_i, g_Ei, '.')
 plt.plot(np.arange(0,205,5), cubic_g_Ei, '-')
+plt.savefig('cubic_spline.pdf')
 plt.show()
 
 E_i1 = E_i[0:3]
@@ -69,4 +74,5 @@ for n in range(3):
     plt.plot(np.arange(np.min(E_i[n][0]),np.max(E_i[n][0])+5, 5), interp_funcn(np.arange(np.min(E_i[n][0]),np.max(E_i[n][0])+5, 5)), '-')
     plt.plot(E_i[n][0], g_Ei[n][0], '.')
 plt.title('bisected lagrange polynomial')
+plt.savefig('bisected_lagrange.pdf')
 plt.show()

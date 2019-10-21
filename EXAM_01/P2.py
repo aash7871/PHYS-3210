@@ -22,7 +22,8 @@ def x2(x):
     y = x**2
     return y
 
-high_low_sum = integrate(x2, 10**4, 0, -0.00001)
-low_high_sum = integrate(x2, 0, 10**4, 0.00001)
+high_low_sum = integrate(x2, 10**4, 0, -0.0001)
+low_high_sum = integrate(x2, 0, 10**4, 0.0001)
 
 print(high_low_sum, low_high_sum)
+print((high_low_sum-(3.33333*10**11))/((10**12)/3), (low_high_sum-(3.33333*10**11))/((10**12)/3))

@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Wed Oct 23 09:56:21 2019
+Created on Fri Oct 25 09:59:35 2019
 
 @author: amandaash
 """
 
 import numpy as np
 import matplotlib.pyplot as plt
+import scipy.optimize as opt
 
 def harmonic_oscillator(p,k,v0,x0,m,time_step,t0,tf):
     v = v0
@@ -27,34 +28,20 @@ def harmonic_oscillator(p,k,v0,x0,m,time_step,t0,tf):
         x_val.append(x)
         v_val.append(v)
         
-        x = xf
         v = vf
+        x = xf
     
     return x_val, v_val, time_array
 
-#P_val = np.arange(2, 8,2)
-P_val = np.array([2,6,10])
-fig1 = plt.figure()
-ax1 = fig1.add_subplot(1,1,1)
-fig2 = plt.figure()
-ax2 = fig2.add_subplot(1,1,1)
+def sine_fit(time, A, phi, omega):
+    y = A*np.sin((omega*time)+phi)
+    return y
 
-for P in P_val:
-    
-    x,v,t = harmonic_oscillator(P,10,0,1,1,0.0001,0,10)
-    ax1.plot(x,t, label = 'P = {0}'.format(P))
-    ax2.plot(v,t, label = 'P = {0}'.format(P))
-
-ax1.legend()
-ax1.set_xlabel('distance')
-ax1.set_ylabel('time')
-fig1.show()
-
-ax2.legend()
-ax2.set_xlabel('velocity')
-ax2.set_ylabel('time')
-fig2.show()
-
-
-
-    
+amplitudes = np.arange(1, 1.5, 0.25)
+for amp in amplitudes:
+    x_values, v_values, times = harmonic_oscillator(6, 10, 0, amp, 1, 0.0001, 0, 10)
+    parameters, parameters_covariance =  opt.curve_fit(sine_fit, times, x_values)
+    print(parameters)
+    plt.plot(x_values, times)
+    plt.plot(sine_fit(parameters[0], parameters[1], parameters[2], times), times)
+    plt.show()

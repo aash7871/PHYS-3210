@@ -44,12 +44,14 @@ def find_period(velocity_array, time_step):
 
 
 dt = 0.00001
+"""
 x_values, v_values, times = harmonic_oscillator(6, 10, 0, 1, 1, dt, 0, 10)     
 period_index = find_period(v_values, dt)
 plt.plot(times, x_values, '-')
 plt.axvline(x = period_index)
 plt.show()
 print(period_index)
+"""
 
 periods = []
 amplitudes = np.arange(1, 5, 0.25)
@@ -57,6 +59,7 @@ for amp in amplitudes:
     x_values, v_values, times = harmonic_oscillator(6, 10, 0, amp, 1, dt, 0, 10)
     period = find_period(v_values, dt)
     periods.append(period)
+    
     """
     plt.plot(x_values, times, '-')
     plt.axhline(y = period, color = 'k')
@@ -70,7 +73,6 @@ plt.plot(amplitudes, periods, '.')
 plt.xlabel('A[m]')
 plt.ylabel('T[s]')
 plt.show()
-
 
 P_array = np.arange(2,14,2)
 period_nonharmonic = []
@@ -86,7 +88,7 @@ for P in P_array:
     x50 = np.array(x50)
     v50 = np.array(v50)
     t50 = np.array(t50)
-    PE = 0.5*k*x50**2
+    PE = (1/P)*k*x50**P
     KE = 0.5*m*v50**2
     E_tot = PE+KE
     
@@ -113,6 +115,7 @@ for P in P_array:
     
     period_nonharmonic.append(period)
 
+#testing that large P values are nonharmonic 
 plt.plot(P_array, period_nonharmonic, '.')
 plt.xlabel('P')
 plt.ylabel('T[s]')

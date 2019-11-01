@@ -68,7 +68,7 @@ for amp in amplitudes:
     plt.ylabel('t[s]')
     plt.show()
     """
-
+plt.title('P = 6')
 plt.plot(amplitudes, periods, '.')
 plt.xlabel('A[m]')
 plt.ylabel('T[s]')

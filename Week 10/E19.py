@@ -99,3 +99,7 @@ ax3.set_ylabel('t')
 ax3.legend()
 fig3.savefig('non_harmonic_amplitude.pdf')
 fig3.show()
+
+
+#Going between the RK2 method and the Euler method from exercise 19, I see no 
+#difference between the two methods in either the position vs. time or velocity vs. time for the oscillator. 

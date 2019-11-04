@@ -72,6 +72,7 @@ plt.title('P = 6')
 plt.plot(amplitudes, periods, '.')
 plt.xlabel('A[m]')
 plt.ylabel('T[s]')
+plt.savefig('amplitude_period.pdf')
 plt.show()
 
 P_array = np.arange(2,14,2)
@@ -106,10 +107,10 @@ for P in P_array:
     fig1.show()
     
     fig2 = plt.figure()
-    stability = -np.log10(np.abs((E_tot-E_tot[0])/E_tot[0]))
-    plt.plot(t50, stability, '.')
+    stability = -np.log10(np.abs((E_tot[1:]-E_tot[0])/E_tot[0]))
+    plt.plot(t50[1:], stability, '.')
     plt.xlabel('t[s]')
-    plt.ylabel('$log(\\frac{E_{tot}-E_{t = 0}}{E_{t=0}})$')
+    plt.ylabel('$-log(\\frac{E_{tot}-E_{t = 0}}{E_{t=0}})$')
     plt.savefig('error_P{0}.pdf'.format(P))
     plt.show()
     
@@ -120,6 +121,7 @@ plt.plot(P_array, period_nonharmonic, '.')
 plt.xlabel('P')
 plt.ylabel('T[s]')
 plt.axhline(y = T_theory)
+plt.savefig('ampvT_theory.pdf')
 plt.show()
 
 

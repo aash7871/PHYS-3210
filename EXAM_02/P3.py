@@ -108,6 +108,60 @@ def pendulum_rk2(t0, tf, h, l, theta_0, dtheta_0):
         
     return time_array, vx_array, vy_array, x_array, y_array, theta_array, dtheta_array
 
+def pendulum_rk2_friction(t0, tf, h, l, theta_0, dtheta_0, b, m):
+    
+    C = g/l
+    
+    theta = theta_0
+    dtheta = dtheta_0
+    
+    x0 = l*np.sin(theta)
+    y0 = l*(1-np.cos(theta))
+    
+    x_array = []
+    y_array = []
+    
+    vx_array = []
+    vy_array = []
+    
+    theta_array = []
+    dtheta_array = []
+    
+    time_array = np.arange(t0,tf,h)
+    
+    for t in time_array:
+        #first Euler's method to find half step:
+        v = np.sqrt(((l*np.sin(dtheta))**2)+(l*(1-np.cos(dtheta)))**2)
+        F_f = -1*np.sign(theta)*b*v**2
+        
+        theta_half = theta + (h/2)*dtheta
+        dtheta_half = dtheta - (h/2)*((C*np.sin(theta)) - (F_f/m))
+        
+        v_half = np.sqrt(((l*np.sin(dtheta_half))**2)+(l*(1-np.cos(dtheta_half)))**2)
+        F_f_half = -1*np.sign(theta)*b*v_half**2
+        
+        dtheta_n = dtheta - h*((C*np.sin(theta_half)) - (F_f_half/m))
+        theta_n = theta + (h*dtheta_half)
+        
+        
+        x_n = l*np.sin(theta_n)
+        y_n = l*(1-np.cos(theta_n))
+        
+        vx_n = l*np.sin(dtheta_n)
+        vy_n = l*(1-np.cos(dtheta_n))
+        
+        theta_array.append(theta_n)
+        dtheta_array.append(dtheta_n)
+        x_array.append(x_n)
+        y_array.append(y_n)
+        vx_array.append(vx_n)
+        vy_array.append(vy_n)
+        
+        theta = theta_n
+        dtheta = dtheta_n
+        
+    return time_array, vx_array, vy_array, x_array, y_array, theta_array, dtheta_array
+
 def find_period(velocity_array, time_step):
     for index in range(len(list(velocity_array))):
         
@@ -124,7 +178,7 @@ h = 0.001
 theta_0 = 10*degree_radian_conversion
 dtheta_0 = 0
 l = 1
-
+"""
 t, x, y, vx, vy, angle, d_angle = pendulum_euler(t0, tf, h, l, theta_0, dtheta_0)
 
 period, omega = find_period(d_angle, h)
@@ -154,12 +208,14 @@ plt.title('euler method')
 plt.xlabel('x[m]')
 plt.ylabel('y[m]')
 plt.plot(x, y, '.')
+plt.savefig('euler_xy.pdf')
 plt.show()
 
 plt.title('euler method')
 plt.xlabel('$V_x$[m $s^{-1}$]')
 plt.ylabel('$V_y$[m $s^{-1}$]')
 plt.plot(vx, vy, '.')
+plt.savefig('euler_vxvy.pdf')
 plt.show()
 
 ax = plt.axes(projection='3d')
@@ -168,6 +224,7 @@ ax.set_xlabel('t[s]')
 ax.set_ylabel('x[m]')
 ax.set_zlabel('y[m]')
 ax.scatter3D(t, x, y, color = 'orange', alpha = 0.3)
+plt.savefig('euler_xyt.pdf')
 plt.show()
 
 ax = plt.axes(projection='3d')
@@ -176,6 +233,7 @@ ax.set_xlabel('t[s]')
 ax.set_ylabel('$V_x$[m $s^{-1}$]')
 ax.set_zlabel('$V_y$[m $s^{-1}$]')
 ax.scatter3D(t, vx, vy, color = 'purple', alpha = 0.3)
+plt.savefig('euler_vxvyt.pdf')
 plt.show()
 
 t, x, y,vx, vy, angle, d_angle = pendulum_rk2(t0, tf, h, l, theta_0, dtheta_0)
@@ -206,12 +264,14 @@ plt.title('RK2 method')
 plt.xlabel('x[m]')
 plt.ylabel('y[m]')
 plt.plot(x, y, '.')
+plt.savefig('RK2_xy.pdf')
 plt.show()
 
 plt.title('RK2 method')
 plt.xlabel('$V_x$[m $s^{-1}$]')
 plt.ylabel('$V_y$[m $s^{-1}$]')
 plt.plot(vx, vy, '.')
+plt.savefig('RK2_vxvy.pdf')
 plt.show()
 
 ax = plt.axes(projection='3d')
@@ -220,6 +280,7 @@ ax.set_xlabel('t[s]')
 ax.set_ylabel('x[m]')
 ax.set_zlabel('y[m]')
 ax.scatter3D(t, x, y, color = 'orange', alpha = 0.3)
+plt.savefig('RK2_xyt.pdf')
 plt.show()
 
 ax = plt.axes(projection='3d')
@@ -228,23 +289,70 @@ ax.set_xlabel('t[s]')
 ax.set_ylabel('$V_x$[m $s^{-1}$]')
 ax.set_zlabel('$V_y$[m $s^{-1}$]')
 ax.scatter3D(t, vx, vy, color = 'purple', alpha = 0.3)
+plt.savefig('RK2_vxvyt.pdf')
 plt.show()
 
 
-initial_amp = np.arange(0.001,90,5)
+initial_amp = np.arange(0.001,90,10)
 periods = []
 for amplitude in initial_amp: 
     theta_0 = amplitude*degree_radian_conversion
     t, x, y,vx, vy, angle, d_angle = pendulum_rk2(t0, tf, h, l, theta_0, dtheta_0)
     period, angular_freq = find_period(d_angle, h)
     periods.append(period)
+    plt.plot(angle, d_angle, '.', label = "$\\theta_0 = {0}^o$".format(amplitude))
+
+plt.ylabel('$\\frac{d\\theta}{dt}$ [rad $s^{-1}$]')
+plt.xlabel('angle[rad]')
+plt.legend()
+plt.savefig('phase_space.pdf')
+plt.show()
     
 plt.title('RK2 - period')
 plt.plot(initial_amp, periods, '.')
 plt.axhline(y = 2*np.pi*np.sqrt(l/g))
 plt.xlabel('amplitude [m]')
 plt.ylabel('period [$s^{-1}$]')
+plt.savefig('period.pdf')
 plt.show()
-    
-        
+
+"""
+degree_radian_conversion = np.pi/180
+t0 = 0
+tf = 20
+h = 0.001
+theta_0 = 10*degree_radian_conversion
+dtheta_0 = 0
+l = 1
+
+t, x, y,vx, vy, angle, d_angle = pendulum_rk2_friction(t0, tf, h, l, theta_0, dtheta_0, 0.5, 0.1)
+fig = plt.figure(figsize = (20,20))
+ax = plt.axes(projection='3d')
+ax.set_title('RK2 method friction')
+ax.set_xlabel('t[s]')
+ax.set_ylabel('x[m]')
+ax.set_zlabel('y[m]')
+ax.scatter3D(t, x, y, color = 'orange', alpha = 0.3)
+plt.savefig('RK2_xyt_friction.pdf')
+plt.show()
+
+fig = plt.figure(figsize = (20,20))
+ax = plt.axes(projection='3d')
+ax.set_title('RK2 method friction')
+ax.set_xlabel('t[s]')
+ax.set_ylabel('$V_x$[m $s^{-1}$]')
+ax.set_zlabel('$V_y$[m $s^{-1}$]')
+ax.scatter3D(t, vx, vy, color = 'purple', alpha = 0.3)
+plt.savefig('RK2_vxvyt_friction.pdf')
+plt.show()
+
+
+plt.title('RK2 friction method')
+plt.ylabel('$\\frac{d\\theta}{dt}$ [rad $s^{-1}$]')
+plt.xlabel('angle[rad]')
+plt.plot(angle, d_angle, '.', ms = 0.5)
+plt.savefig('phase_space_friction.pdf')
+plt.show()
+
+
         

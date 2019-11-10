@@ -63,8 +63,15 @@ def wave_funcn_alpha(x0, xf, h, a, E, m, V_well):
     kappa = -C*E
     
     x_well = []
+    
     psi_val_out = []
     dpsi_val_out = []
+    
+    psi_val_out_l = []
+    dpsi_val_out_l = []
+    
+    psi_val_out_r = []
+    dpsi_val_out_r = []
     
     x_out = []
     psi_val_well = []
@@ -78,13 +85,18 @@ def wave_funcn_alpha(x0, xf, h, a, E, m, V_well):
                 psi = np.exp(x*kappa)
                 dpsi = (kappa)* psi
                 
-                
                 psi_val_out.append(psi)
                 dpsi_val_out.append(dpsi)
+                
+                psi_val_out_l.append(psi)
+                dpsi_val_out_l.append(dpsi)
             if x > 0:
                 
                 psi = np.exp(-x*kappa)
                 dpsi = -(kappa)* psi
+                
+                psi_val_out_r.append(psi)
+                dpsi_val_out_r.append(dpsi)
                 
                 psi_val_out.append(psi)
                 dpsi_val_out.append(dpsi)
@@ -99,24 +111,59 @@ def wave_funcn_alpha(x0, xf, h, a, E, m, V_well):
         
             psi = psi_n
             dpsi = dpsi_n
-        
-    return x_well, x_out, psi_val_well, dpsi_val_well, psi_val_out, dpsi_val_out, 
+    
+    
+    if x0 > xf: 
+        #coming from the right
+        z = dpsi_val_out_l[0]/psi_val_out_l[0]
+    if x0 < xf: 
+        #coming from the left
+        z = dpsi_val_out_r[0]/psi_val_out_r[0]
+       
+    return x_well, x_out, psi_val_well, dpsi_val_well, psi_val_out, dpsi_val_out, z
 
 x0 = -5
 xf = 5
 h = 0.001
 a = 2
-E = -16
+E = -16.85
 #m = 1.67*10**-27
 m = 9.11*10**-31
 C = 0.0483
 V = -83
 
 
-x_well_array, x_out_array, psi_array_well, dpsi_array_well, psi_array_out, dpsi_array_out = wave_funcn_alpha(x0,xf,h,a,E,m, V)
-plt.plot(x_well_array, psi_array_well, '.')
-plt.plot(x_out_array, psi_array_out, '.')
+x_well_array, x_out_array, psi_array_well, dpsi_array_well, psi_array_out, dpsi_array_out, z = wave_funcn_alpha(x0,xf,h,a,E,m, V)
+print(z)
+plt.plot(x_well_array, psi_array_well, '.', ms = 0.5)
+plt.plot(x_out_array, psi_array_out, '.', ms = 0.5)
 plt.show()
         
+#energy solver 
+#going from left and right for a single energy:
+E0 = -15
+E1 = -20
+
+for n in range(200):
+    x_well_array, x_out_array, psi_array_well, dpsi_array_well, psi_array_out, dpsi_array_out, z0r = wave_funcn_alpha(x0,xf,h,a,E0,m, V) 
+    x_well_array, x_out_array, psi_array_well, dpsi_array_well, psi_array_out, dpsi_array_out, z0l = wave_funcn_alpha(xf,x0,-h,a,E0,m, V) 
     
+    delta_E0 = (z0l - z0r)/(z0l + z0r)
     
+    x_well_array, x_out_array, psi_array_well, dpsi_array_well, psi_array_out, dpsi_array_out, z1r = wave_funcn_alpha(x0,xf,h,a,E1,m, V) 
+    x_well_array, x_out_array, psi_array_well, dpsi_array_well, psi_array_out, dpsi_array_out, z1l = wave_funcn_alpha(xf,x0,-h,a,E1,m, V)
+    
+    delta_E1 = (z1l - z1r)/(z1l + z1r)
+   
+    
+    m = (delta_E1 - delta_E0)/(E1-E0)
+    En = E0 - (z0*m)
+    
+    E0 = En
+    E1 = E1
+  
+    print(En, z0)
+    if np.abs(0 + z0) <= 10**-6:
+        
+        print(E1)
+        break

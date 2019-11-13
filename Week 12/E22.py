@@ -115,55 +115,71 @@ def wave_funcn_alpha(x0, xf, h, a, E, m, V_well):
     
     if x0 > xf: 
         #coming from the right
-        z = dpsi_val_out_l[0]/psi_val_out_l[0]
+        #print(dpsi_val_out_l[0], psi_val_out_l[0])
+        zl = dpsi_val_well[-1]/psi_val_well[-1]
+        zr = dpsi_val_out_l[0]/psi_val_out_l[0]
+        z = (zl - zr)/(zl+zr)
     if x0 < xf: 
         #coming from the left
-        z = dpsi_val_out_r[0]/psi_val_out_r[0]
+        #print(dpsi_val_out_r[0], psi_val_out_r[0])
+        zr = dpsi_val_well[-1]/psi_val_well[-1]
+        zl = dpsi_val_out_r[0]/psi_val_out_r[0]
+        z = (zl - zr)/(zl+zr)
+        
        
     return x_well, x_out, psi_val_well, dpsi_val_well, psi_val_out, dpsi_val_out, z
 
-x0 = -5
-xf = 5
-h = 0.001
+x0 = -3
+xf = 3
+h = 0.0001
 a = 2
 E = -16.85
-#m = 1.67*10**-27
-m = 9.11*10**-31
+m = 1.67*10**-27
 C = 0.0483
 V = -83
 
 
 x_well_array, x_out_array, psi_array_well, dpsi_array_well, psi_array_out, dpsi_array_out, z = wave_funcn_alpha(x0,xf,h,a,E,m, V)
-print(z)
 plt.plot(x_well_array, psi_array_well, '.', ms = 0.5)
 plt.plot(x_out_array, psi_array_out, '.', ms = 0.5)
 plt.show()
         
 #energy solver 
 #going from left and right for a single energy:
-E0 = -15
+E0 = -10
 E1 = -20
 
-for n in range(200):
-    x_well_array, x_out_array, psi_array_well, dpsi_array_well, psi_array_out, dpsi_array_out, z0r = wave_funcn_alpha(x0,xf,h,a,E0,m, V) 
-    x_well_array, x_out_array, psi_array_well, dpsi_array_well, psi_array_out, dpsi_array_out, z0l = wave_funcn_alpha(xf,x0,-h,a,E0,m, V) 
+for n in range(20):
+    x_well_array, x_out_array, psi_array_well, dpsi_array_well, psi_array_out, dpsi_array_out, z0 = wave_funcn_alpha(x0,xf,h,a,E0,m, V) 
+    print(z0)
+    #x_well_array, x_out_array, psi_array_well, dpsi_array_well, psi_array_out, dpsi_array_out, z0l = wave_funcn_alpha(xf,x0,-h,a,E0,m, V) 
+    #print(z0l, z0r)
+    #delta_E0 = (z0l - z0r)/(z0l + z0r)
+    #print(delta_E0)
     
-    delta_E0 = (z0l - z0r)/(z0l + z0r)
+    x_well_array, x_out_array, psi_array_well, dpsi_array_well, psi_array_out, dpsi_array_out, z1 = wave_funcn_alpha(x0,xf,h,a,E1,m, V) 
+    print(z1)
+    #x_well_array, x_out_array, psi_array_well, dpsi_array_well, psi_array_out, dpsi_array_out, z1l = wave_funcn_alpha(xf,x0,-h,a,E1,m, V)
+
+    #print(z1l, z1r)
+    #delta_E1 = (z1l - z1r)/(z1l + z1r)
+    #print(delta_E1)
     
-    x_well_array, x_out_array, psi_array_well, dpsi_array_well, psi_array_out, dpsi_array_out, z1r = wave_funcn_alpha(x0,xf,h,a,E1,m, V) 
-    x_well_array, x_out_array, psi_array_well, dpsi_array_well, psi_array_out, dpsi_array_out, z1l = wave_funcn_alpha(xf,x0,-h,a,E1,m, V)
-    
-    delta_E1 = (z1l - z1r)/(z1l + z1r)
-   
-    
-    m = (delta_E1 - delta_E0)/(E1-E0)
-    En = E0 - (z0*m)
-    
+    m = (z1 - z0)/(E1-E0)
+    En = E0 - (z0/m)
+    print(En)
     E0 = En
-    E1 = E1
+    E1 = En + (np.sign(z0*m)*7)
   
-    print(En, z0)
-    if np.abs(0 + z0) <= 10**-6:
+    #print(En, delta_E0)
+    if np.abs(z0*m) <= 1e-4:
+        E_match = En
+        x_well_array, x_out_array, psi_array_well, dpsi_array_well, psi_array_out, dpsi_array_out, z = wave_funcn_alpha(x0,xf,h,a,E_match,m, V) 
+        plt.plot(x_well_array, psi_array_well, '.', ms = 0.5)
+        plt.plot(x_out_array, psi_array_out, '.', ms = 0.5)
+        plt.show()
         
-        print(E1)
+        print('matched, E = {0}'.format(E_match))
+        
+        #print(E1)
         break

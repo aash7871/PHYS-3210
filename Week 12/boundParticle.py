@@ -81,7 +81,7 @@ for n in range(20):
     xs_right, psi_right, dpsi_right = solve_wave_function(-dx,  100., x_match, a, E[1])
 
     dE.append((dpsi_left[-1]/psi_left[-1] - dpsi_right[-1]/psi_right[-1]) / (dpsi_left[-1]/psi_left[-1] + dpsi_right[-1]/psi_right[-1]))
-
+    
     # bisect to find a new E for test run
     DdE_DE = (dE[1] - dE[0])/(E[1] - E[0])
     E_test = E[0] - dE[0]/DdE_DE

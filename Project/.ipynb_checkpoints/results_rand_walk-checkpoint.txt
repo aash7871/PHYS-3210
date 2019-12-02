@@ -1,0 +1,4 @@
+photon escape time = -694.3552763578667[s], from random walk
+photon escape time = -2.2102014898858707e-07[yr], from random walk
+photon escape time = 4009912293167.525[s], from random walk
+photon escape time = 1276.394725645138[yr], from number steps

@@ -75,9 +75,15 @@ def mean_free_path_beta(opacity, density):
     l = 1/(density*opacity)
     return l
 
+def mean_free_path_gaussian(opacity, density, sigma):
+    l = 1/(density*opacity)
+    mfp = np.random.normal(l, sigma, 1)
+    return float(mfp[0])
+
 def photon_escape(N_walkers, N_layers, N_steps):
     c = 3e10
-
+    sigma = 1
+    
     x = 0
     y = 0
     z = 0
@@ -93,15 +99,11 @@ def photon_escape(N_walkers, N_layers, N_steps):
     epsilon= 1e-7
 
     radius_bisection = np.arange(epsilon, r_sun, section)
-    t_est = []
-    median_velocity = []
+
     escape_times = []
     for radius in radius_bisection:
         layer_escape = []
         for walker in range(N_walkers):
-            theta_walk = []
-            phi_walk = []
-            
             x = radius
             y = 0
             z = 0
@@ -110,8 +112,7 @@ def photon_escape(N_walkers, N_layers, N_steps):
             x_walk = [x]
             y_walk = [y]
             z_walk = [z]
-            l_all = []
-            dt_all = []
+
             for n in range(N_steps):
                 density = density_delta(r, r_sun)
                 pressure = pressure_delta(r, 100, r_sun)
@@ -123,7 +124,10 @@ def photon_escape(N_walkers, N_layers, N_steps):
                 phi = rand.uniform(0,2*np.pi)
                 phi_walk.append(phi)
             
-                l = mean_free_path_beta(opacity, density)
+                if gaussian == True:
+                    l = mean_free_path_gaussian(opacity, density, sigma)
+                else:
+                    l = mean_free_path_beta(opacity, density)
             
                 l_all.append(l)
             
@@ -167,14 +171,22 @@ def photon_escape(N_walkers, N_layers, N_steps):
         
     return np.sum(escape_times)
 
-file = open('escape_times.txt', '+w')
+
+file_gaussian = open('escape_times_gaussian.txt', '+w')
+file_non = open('escape_times_non.txt', '+w')
 N_tests = 100
 N_walkers = 1000
 N_layers = 10
 N_steps = int(1e5)
-escape_times = []
+
+escape_times_gaussian = []
+escape_times_non = []
 for test in range(N_tests):
-    escape = photon_escape(N_walkers, N_layers, N_steps)
-    escape_times.append(escape)
-np.savetxt(file, np.array(escape_times))
+    escape_g = photon_escape(N_walkers, N_layers, N_steps)
+    escape_n = photon_escape(N_walkers, N_layers, N_steps, False)
+    escape_times_gaussian.append(escape_g)
+    escape_times_non.append(escape_n)
+    
+np.savetxt(file_gaussian, np.array(escape_times_gaussian))
+np.savetxt(file_non, np.array(escape_times_non))
 file.close()

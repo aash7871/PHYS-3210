@@ -70,6 +70,7 @@ E_i = [[E_i1], [E_i2], [E_i3]]
 g_Ei = [[g_Ei1], [g_Ei2], [g_Ei3]]
 
 for n in range(3):
+    
     interp_funcn = interp.lagrange(E_i[n][0], g_Ei[n][0])
     plt.plot(np.arange(np.min(E_i[n][0]),np.max(E_i[n][0])+5, 5), interp_funcn(np.arange(np.min(E_i[n][0]),np.max(E_i[n][0])+5, 5)), '-')
     plt.plot(E_i[n][0], g_Ei[n][0], '.')

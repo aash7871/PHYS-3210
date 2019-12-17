@@ -142,6 +142,9 @@ V = -83
 x_well_array, x_out_array, psi_array_well, dpsi_array_well, psi_array_out, dpsi_array_out, z = wave_funcn_alpha(x0,xf,h,a,E,m, V)
 plt.plot(x_well_array, psi_array_well, '.', ms = 0.5)
 plt.plot(x_out_array, psi_array_out, '.', ms = 0.5)
+plt.xlabel('x[fm]')
+plt.ylabel('$\psi_x$')
+plt.savefig('ex_wave.pdf')
 plt.show()
         
 #energy solver 

@@ -177,7 +177,7 @@ tf = 10
 h = 0.001
 theta_0 = 10*degree_radian_conversion
 dtheta_0 = 0
-l = 1
+l = 10
 
 t, x, y, vx, vy, angle, d_angle = pendulum_euler(t0, tf, h, l, theta_0, dtheta_0)
 

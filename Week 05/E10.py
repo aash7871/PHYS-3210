@@ -41,11 +41,11 @@ def pond_sampler(N):
 
 Area = []
 for N in range(1000):
-    Area.append(pond_sampler(10000))
+    Area.append(pond_sampler(1000))
 plt.hist(Area, bins = 30)
 plt.savefig('/Users/amandaash/Desktop/PHYS_3210/Week 05/pond_histogram.pdf')
 plt.show()
 
 print(np.median(Area))
 print(np.std(Area))
-print(np.std(Area)/np.sqrt(10000*10000))
+print(np.std(Area)/np.sqrt(1000*1000))

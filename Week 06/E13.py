@@ -27,7 +27,9 @@ def probability_dist_integral(function, N, a, b):
     accepted= []
     rejected = []
     
-    A_square = (np.abs(a) + np.abs(b))*(np.abs(function(a)) + np.abs(function(b)))
+    #A_square = (np.abs(a) + np.abs(b))*(np.abs(function(a)) + np.abs(function(b)))
+    A_square = (np.abs(b-a))*(np.abs(function(b)-function(a)))
+    print(A_square)
     x_sample = rand.uniform(a, b, N)
     y_sample = rand.uniform(np.min(function(x_sample)), np.max(function(x_sample)), N)
     points = np.column_stack((x_sample, y_sample))

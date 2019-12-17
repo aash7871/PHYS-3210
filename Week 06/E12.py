@@ -25,8 +25,9 @@ def MC_multidimension_integrand(function, intervals, N_dimensions, sample_number
     interval_scalar = []
     for dimension in intervals:
         a = dimension[0]
-        b = dimension [1]
+        b = dimension[1]
         sample = rand.uniform(a, b, sample_number)
+       
         interval_samples.append(sample)
         interval_scalar.append(b-a)
     
@@ -35,14 +36,13 @@ def MC_multidimension_integrand(function, intervals, N_dimensions, sample_number
     interval_samples = np.array(interval_samples)
     
     interval_samples = np.column_stack((interval_samples))
-
     
     f_sample = []
     
     for x_sample in interval_samples:
         
         f_sample.append(function(x_sample))
-        
+       
     funcn_sum = np.sum(f_sample)
     
     numeric_integral = (interval_product/sample_number)*funcn_sum
@@ -65,9 +65,10 @@ def f_ND(D_array):
 
 
 N_interval = [[0,1], [0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1],[0,1]]
-D10_integral = MC_multidimension_integrand(f_ND, N_interval, 10, 10000)
+D10_integral = MC_multidimension_integrand(f_ND, N_interval, 10, 2)
 print(D10_integral)
 
+"""
 sample_array = np.arange(2,10000,10)
 integral_value = []
 for s in sample_array:
@@ -79,6 +80,6 @@ plt.xlabel(r'$\frac{1}{\sqrt{N}}$')
 plt.ylabel('relative error')
 plt.savefig('rel_erro.pdf')
 plt.show()
-
+"""
     
     
